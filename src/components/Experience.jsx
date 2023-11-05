@@ -41,6 +41,7 @@ const Cube = ({ color, ...props }) => {
     rotation,
     wobble,
     move,
+    lookAt,
   } = useControls({
     color: color,
     rotation: false,
@@ -54,6 +55,7 @@ const Cube = ({ color, ...props }) => {
     File: pluginFile({ onChange: onFileChange }),
     move: false,
     wobble: false,
+    lookAt: false,
   });
 
   const {
@@ -92,6 +94,12 @@ const Cube = ({ color, ...props }) => {
       cube.current.position.x = Math.sin(state.clock.getElapsedTime());
       cube.current.position.y = Math.sin(state.clock.getElapsedTime());
       cube.current.position.z = Math.sin(state.clock.getElapsedTime());
+    }
+
+    if (lookAt) {
+      state.camera.lookAt(cube.current.position);
+    } else {
+      state.camera.lookAt(new THREE.Vector3(0, 0, 0));
     }
   });
 
